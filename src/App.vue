@@ -1,14 +1,7 @@
 <template>
-  <div id="nav">
-
-  </div>
+  <router-view></router-view>
 </template>
 
 <script>
-import ''
-</script>
 
-<style lang="less">
-#app {
-}
-</style>
+</script>
