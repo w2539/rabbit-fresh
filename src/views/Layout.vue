@@ -1,5 +1,5 @@
 <template>
-  <nav>顶部通栏</nav>
+  <navbar></navbar>
   <header>头部</header>
   <main>
     <!-- 二级路由 -->
@@ -8,8 +8,12 @@
   <footer>底部</footer>
 </template>
 <script>
+import navbar from '@/components/app-navbar.vue'
 export default {
-  name: 'Layout'
+  name: 'Layout',
+  components: {
+    navbar
+  }
 }
 </script>
 <style lang="less" scoped>

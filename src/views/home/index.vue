@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import '@/assets/styles/common.less'
 export default {
   name: 'xtx-home-page'
 }
