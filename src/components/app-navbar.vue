@@ -3,7 +3,7 @@
     <div class="container">
       <ul>
         <template v-if="profile.token">
-          <li><a href="javascript:;"><i class="iconfont icon-user"></i>{{ profile. avatar }}</a></li>
+          <li><a href="javascript:;"><i class="iconfont icon-user"></i>{{profile.account}}</a></li>
           <li><a href="javascript:;">退出登录</a></li>
         </template>
         <template v-else>
@@ -19,19 +19,26 @@
     </div>
   </nav>
 </template>
+
 <script>
+
 // 在项目里直接使用 vuex里面的方法
 import { useStore } from 'vuex'
-// import { computed } from 'vue'
+import { computed } from 'vue'
 export default {
   name: 'AppTopnav',
   setup () {
     const store = useStore()
-    const { profile } = store.state.user
+    const profile = computed(() => {
+      // 直接按需导入不是响应式数据 这样导入可以保证是响应式数据
+      // 原理是vuex的特性
+      return store.state.user.profile
+    })
     return { profile }
   }
 }
 </script>
+
 <style scoped lang="less">
 .app-topnav {
   background: #333;

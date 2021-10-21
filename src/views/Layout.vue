@@ -1,6 +1,6 @@
 <template>
   <navbar></navbar>
-  <header>头部</header>
+  <headerbar></headerbar>
   <main>
     <!-- 二级路由 -->
     <router-view></router-view>
@@ -9,10 +9,12 @@
 </template>
 <script>
 import navbar from '@/components/app-navbar.vue'
+import headerbar from '@/components/app-handerbar.vue'
 export default {
   name: 'Layout',
   components: {
-    navbar
+    navbar,
+    headerbar
   }
 }
 </script>
