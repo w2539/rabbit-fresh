@@ -1,30 +1,20 @@
 <template>
-  <header class='app-header'>
+  <header class="app-header">
     <div class="container">
       <h1 class="logo">
         <RouterLink to="/">小兔鲜</RouterLink>
       </h1>
-      <ul class="navs">
-        <li class="home">
-          <RouterLink to="/">首页</RouterLink>
-        </li>
-        <li><a href="#">美食</a></li>
-        <li><a href="#">餐厨</a></li>
-        <li><a href="#">艺术</a></li>
-        <li><a href="#">电器</a></li>
-        <li><a href="#">居家</a></li>
-        <li><a href="#">洗护</a></li>
-        <li><a href="#">孕婴</a></li>
-        <li><a href="#">服装</a></li>
-        <li><a href="#">杂货</a></li>
-      </ul>
+
+      <appHandercc></appHandercc>
+
       <div class="search">
         <i class="iconfont icon-search"></i>
-        <input type="text" placeholder="搜一搜">
+        <input type="text" placeholder="搜一搜" />
       </div>
       <div class="cart">
         <a class="curr" href="#">
-          <i class="iconfont icon-cart"></i><em>2</em>
+          <i class="iconfont icon-cart"></i>
+          <em>2</em>
         </a>
       </div>
     </div>
@@ -32,15 +22,21 @@
 </template>
 
 <script>
+
+import appHandercc from './app-handercc.vue'
 export default {
-  name: 'AppHeader'
+  name: 'AppHeader',
+  components: {
+    appHandercc
+  }
 }
+
 </script>
 
-<style scoped lang='less'>
+<style scoped lang="less">
 .app-header {
   background: #fff;
-  .container {5
+  .container {
     display: flex;
     align-items: center;
   }

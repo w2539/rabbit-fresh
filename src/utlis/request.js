@@ -8,12 +8,10 @@ import store from '@/store'
 import router from '@/router'
 
 // 导出基准地址，原因：其他地方不是通过axios发请求的地方用上基准地址
-// 比如说图片不是通过axios来获取请求的
 export const baseURL = 'http://pcapi-xiaotuxian-front-devtest.itheima.net/'
 const instance = axios.create({
   // axios 的一些配置，baseURL  timeout
   baseURL,
-  // 时间间隔
   timeout: 5000
 })
 
@@ -25,21 +23,17 @@ instance.interceptors.request.use(config => {
   const { profile } = store.state.user
   // 2. 判断是否有token
   if (profile.token) {
-    // 3. 设置token 将token加到请求头里面
-    // bearer这个单词的本意就是“持票人
+    // 3. 设置token
     config.headers.Authorization = `Bearer ${profile.token}`
   }
   return config
 }, err => {
-  // 回调打印一下报错信息
   return Promise.reject(err)
 })
 
 // res => res.data  取出data数据，将来调用接口的时候直接拿到的就是后台的数据
 instance.interceptors.response.use(res => res.data, err => {
   // 401 状态码，进入该函数
-  // 收到403响应表示服务器完成认证过程，但是客户端请求没有权限去访问要求的资源。
-  // 收到401响应，表示请求没有被认证—压根没有认证或者认证不正确—但是请重新认证和重试
   if (err.response && err.response.status === 401) {
     // 1. 清空无效用户信息
     // 2. 跳转到登录页
