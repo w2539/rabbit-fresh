@@ -3,14 +3,14 @@
     <li class="home">
       <RouterLink to="/">首页</RouterLink>
     </li>
-    <li v-for="items in list" :key="items.id">
-      <RouterLink to="/">{{items.name}}</RouterLink>
-      <div class="layer">
+    <li v-for="items in list" :key="items.id" @mouseenter="show(items)" @mouseleave="hide(items)">
+      <RouterLink :to="`/category/${items.id}`" @click="hide(items)">{{items.name}}</RouterLink>
+      <div class="layer" :class="{open:items.open}">
         <ul>
           <li v-for="sub in items.children" :key="sub.id">
-            <RouterLink to="/">
-              <img :src="sub.picture" alt="">
-              <p>{{sub.name}}</p>
+          <RouterLink :to="`/category/sub/${sub.id}`" @click="hide(items)">
+              <img :src="sub.picture" alt />
+              <p>{{ sub.name }}</p>
             </RouterLink>
           </li>
         </ul>
@@ -29,12 +29,18 @@ export default {
     const list = computed(() => {
       return store.state.category.list
     })
-    return { list }
+    const show = (items) => {
+      store.commit('category/show', items)
+    }
+    const hide = (items) => {
+      store.commit('category/hide', items)
+    }
+    return { list, show, hide }
   }
 }
 </script>
 
-<style scoped lang='less'>
+<style scoped lang="less">
 .appHandercc {
   width: 820px;
   display: flex;
@@ -57,14 +63,18 @@ export default {
         color: @xtxColor;
         border-bottom: 1px solid @xtxColor;
       }
-      > .layer {
-        height: 132px;
-        opacity: 1;
-      }
+      // > .layer {
+      //   height: 132px;
+      //   opacity: 1;
+      // }
     }
   }
 }
 .layer {
+  &.open {
+    height: 132px;
+    opacity: 1;
+  }
   width: 1240px;
   background-color: #fff;
   position: absolute;
