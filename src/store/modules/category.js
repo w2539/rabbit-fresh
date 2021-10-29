@@ -17,6 +17,7 @@ export default {
     },
     // 修改当前一级分类下的open数据为true
     show (state, item) {
+      //  find() 方法返回数组中满足提供的测试函数的第一个元素的值。否则返回 undefined。
       const category = state.list.find((category) => category.id === item.id)
       category.open = true
     },

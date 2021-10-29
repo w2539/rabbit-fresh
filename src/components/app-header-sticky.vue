@@ -14,23 +14,27 @@
 
 <script>
 import appHandercc from '@/components/app-handercc.vue'
-import { ref } from '@vue/reactivity'
-import { onMounted } from '@vue/runtime-core'
+// import { ref } from '@vue/reactivity'
+// import { onMounted } from '@vue/runtime-core'
+import { useWindowScroll } from '@vueuse/core'
 export default {
   name: 'AppHeaderSticky',
   components: { appHandercc },
   setup () {
     // 定义响应数据，方便模板使用
-    const y = ref(0)
+    // const y = ref(0)
     // 在dom树完全加载完后 使用vue3 生命周期函数
-    onMounted(() => {
-      // 添加页面滚动事件
-      window.addEventListener('scroll', () => {
-        // 在documentElement中可以获取 滚动与顶部的距离
-        const scrollTop = document.documentElement.scrollTop
-        y.value = scrollTop
-      })
-    })
+    // onMounted(() => {
+    // 添加页面滚动事件
+    // window.addEventListener('scroll', () => {
+    // 在documentElement中可以获取 滚动与顶部的距离
+    // const scrollTop = document.documentElement.scrollTop
+    // y.value = scrollTop
+    // })
+    // })
+
+    // 组合API
+    const { y } = useWindowScroll()
 
     return { y }
   }

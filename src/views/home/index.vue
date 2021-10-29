@@ -1,11 +1,22 @@
 <template>
-  <div class="xtx-home-page">首页</div>
+  <div class="page-home">
+    <div class="home-entry">
+      <div class="container">
+        <!-- 左侧分类 -->
+        <HomeCategory />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import '@/assets/styles/common.less'
+import HomeCategory from '@/views/home/components/home-category.vue'
 export default {
-  name: 'xtx-home-page'
+  name: 'xtx-home-page',
+  components: {
+    HomeCategory
+  }
 }
 </script>
 
