@@ -6,10 +6,12 @@ export default {
   state () {
     return {
       // 分类信息集合，依赖topCategory重新设置，保证初始化就要数据，不至于白屏
+      // map() 方法返回一个新数组，数组中的元素为 原始数组 元素调用函数处理后的值。
+      // 将分类的名字单独提取出来
       list: topCategory.map((item) => ({ name: item }))
     }
   },
-  // 修改分类函数
+  // 加载数据成功后需要修改list所以需要mutations函数
   mutations: {
     // payload 所有的分类集合
     setList (state, payload) {
@@ -27,7 +29,7 @@ export default {
       category.open = false
     }
   },
-  // 获取分类函数
+  // 需要向后台加 载数据，所以需要actions函数获取数据
   actions: {
     async getList ({ commit }) {
       // 获取分类数据

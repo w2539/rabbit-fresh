@@ -8,10 +8,12 @@ import store from '@/store'
 import router from '@/router'
 
 // 导出基准地址，原因：其他地方不是通过axios发请求的地方用上基准地址
+// 项目的接口地址
 export const baseURL = 'http://pcapi-xiaotuxian-front-devtest.itheima.net/'
 const instance = axios.create({
   // axios 的一些配置，baseURL  timeout
   baseURL,
+  // 请求时间
   timeout: 5000
 })
 
@@ -50,6 +52,7 @@ instance.interceptors.response.use(res => res.data, err => {
 })
 
 // 请求工具函数
+// 将整个函数直接以文件导出 所以可以直接调文件名使用
 export default (url, method, submitData) => {
   // 负责发请求：请求地址，请求方式，提交的数据
   return instance({
