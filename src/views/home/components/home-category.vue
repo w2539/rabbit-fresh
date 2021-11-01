@@ -81,7 +81,7 @@ export default {
       list.push(brand)
       return list
     })
-
+    // 将categoryId 变为响应式数据
     const categoryId = ref(null)
     const currCategory = computed(() => {
       // 根据id 获取到第一个 id值相同的
