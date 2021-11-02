@@ -1,31 +1,113 @@
 <template>
-  <div class="xtx-carousel">
+  <div class="xtx-carousel" @mouseenter="stop()" @mouseleave="start()">
     <!-- 图片容器 -->
     <ul class="carousel-body">
       <!-- 显示的图片 -->
-      <li class="carousel-item fade">
+      <!-- fade显示隐藏 -->
+      <li class="carousel-item" v-for="(items, i) in sliders" :key="i" :class="{ fade: index === i }">
         <RouterLink to="/">
-          <img
-            src="http://yjy-xiaotuxian-dev.oss-cn-beijing.aliyuncs.com/picture/2021-04-15/1ba86bcc-ae71-42a3-bc3e-37b662f7f07e.jpg"
-            alt=""
-          />
+          <img :src="items.imgUrl" alt="" />
         </RouterLink>
       </li>
     </ul>
     <!-- 上一张 -->
-    <a href="javascript:;" class="carousel-btn prev"><i class="iconfont icon-angle-left"></i></a>
+    <a @click="toggle(-1)" href="javascript:;" class="carousel-btn prev"><i class="iconfont icon-angle-left"></i></a>
     <!-- 下一张 -->
-    <a href="javascript:;" class="carousel-btn next"><i class="iconfont icon-angle-right"></i></a>
+    <a @click="toggle(+1)" href="javascript:;" class="carousel-btn next"><i class="iconfont icon-angle-right"></i></a>
     <!-- 小圆点 -->
     <div class="carousel-indicator">
-      <span v-for="i in 5" :key="i"></span>
+      <span @click="index = i" v-for="(items, i) in sliders" :key="i" :class="{ active: index == i }"></span>
     </div>
   </div>
 </template>
 
 <script>
+import { ref, watch } from 'vue'
+import { onUnmounted } from '@vue/runtime-core'
+
 export default {
-  name: 'XtxCarousel'
+  name: 'XtxCarousel',
+  // 要传入的参数
+  props: {
+    sliders: {
+      type: Array,
+      default: () => []
+    },
+    // 传入的时间
+    duration: {
+      type: Number,
+      // 默认时间
+      default: 3000
+    },
+    // 是否自动轮播
+    autoPlay: {
+      type: Boolean,
+      // 默认开启轮播
+      default: true
+    }
+  },
+  setup (props) {
+    // 控制图片索引
+    // 将index等于 循环的 id 进行联系
+    const index = ref(0)
+    let time = null
+    const autoPlayFn = () => {
+      clearInterval(time)
+      // 每隔一定时间切换索引
+      time = setInterval(() => {
+        index.value++
+        if (index.value >= props.sliders.length) {
+          index.value = 0
+        }
+      }, props.duration)
+    }
+    // 监听sliders的变化 判断如果有数据 并且 autoPlay的值是true
+    watch(
+      () => props.sliders,
+      (newVal) => {
+        // 有数据&开启自动播放，才调用自动播放函数
+        if (newVal.length && props.autoPlay) {
+          index.value = 0
+          autoPlayFn()
+        }
+      },
+      { immediate: true }
+    )
+    const stop = () => {
+      // 清除轮播图
+      clearInterval(time)
+    }
+    // 开启轮播图
+    const start = () => {
+      if (props.sliders.length && props.autoPlay) {
+        autoPlayFn()
+      }
+    }
+
+    const toggle = (step) => {
+      const newindex = index.value + step
+      // 超过最大图片数量 移动到第一张
+      if (newindex > props.sliders.length - 1) {
+        index.value = 0
+        // 表示结束循环
+        return
+      }
+      // 图片下标小于0 移动到最后一张
+      if (newindex < 0) {
+        index.value = props.sliders.length - 1
+        // 表示结束循环
+        return false
+      }
+      // 正常情况
+      index.value = newindex
+    }
+    // 组件消耗，清理定时器
+    onUnmounted(() => {
+      clearInterval(time)
+    })
+
+    return { index, stop, start, toggle }
+  }
 }
 </script>
 <style scoped lang="less">
