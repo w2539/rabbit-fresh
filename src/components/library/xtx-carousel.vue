@@ -71,13 +71,14 @@ export default {
           autoPlayFn()
         }
       },
-      { immediate: true }
+      { immediate: true } // 表示立即执行
     )
+    // 鼠标停留
     const stop = () => {
       // 清除轮播图
       clearInterval(time)
     }
-    // 开启轮播图
+    // 鼠标移开 开启轮播图
     const start = () => {
       if (props.sliders.length && props.autoPlay) {
         autoPlayFn()
