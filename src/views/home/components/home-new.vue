@@ -4,15 +4,20 @@
       <template>
         <XtxMore path="/"></XtxMore>
       </template>
-      <ul class="goods-list">
-        <li v-for="item in list" :key="item.id">
-          <RouterLink :to="`/product/${item.id}`">
-            <img :src="item.picture" alt="" />
-            <p class="name ellipsis">{{ item.name }}</p>
-            <p class="price">&yen;{{ item.price }}</p>
-          </RouterLink>
-        </li>
-      </ul>
+      <div style="position: relative; height: 406px">
+        <transition name="fade">
+          <ul class="goods-list" v-if="list.length">
+            <li v-for="item in list" :key="item.id">
+              <RouterLink :to="`/product/${item.id}`">
+                <img :src="item.picture" alt="" />
+                <p class="name ellipsis">{{ item.name }}</p>
+                <p class="price">&yen;{{ item.price }}</p>
+              </RouterLink>
+            </li>
+          </ul>
+          <HomeSkeleton v-else></HomeSkeleton>
+        </transition>
+      </div>
     </HomePanel>
   </div>
 </template>
@@ -23,6 +28,7 @@ import { findNew } from '@/api/home'
 import { ref } from '@vue/reactivity'
 import HomePanel from './home-panel.vue'
 import XtxMore from '@/components/library/xtx-more.vue'
+import HomeSkeleton from './home-skeleton.vue'
 export default defineComponent({
   name: 'home-new',
   setup () {
@@ -32,11 +38,25 @@ export default defineComponent({
     })
     return { list }
   },
-  components: { HomePanel, XtxMore }
+  components: { HomePanel, XtxMore, HomeSkeleton }
 })
 </script>
 
 <style scoped lang="less">
+.fade {
+  &-leave {
+    &-active {
+      position: absolute;
+      width: 100%;
+      transition: opacity 0.5s 0.2s;
+      z-index: 1;
+    }
+    &-to {
+      opacity: 0;
+    }
+  }
+}
+
 .goods-list {
   display: flex;
   justify-content: space-between;
