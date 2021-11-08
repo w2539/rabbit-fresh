@@ -7,7 +7,7 @@
       <div class="container">
         <!-- 左侧分类 -->
         <HomeCategory />
-        <!-- 轮播图 -->
+        <!-- 轮播图 -->8
         <HomeBanner></HomeBanner>
       </div>
     </div>

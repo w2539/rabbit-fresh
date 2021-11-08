@@ -1,6 +1,6 @@
 <template>
   <HomePanel title="人气推荐" sub-title="人气爆款 不容错过">
-    <div style="position: relative; height: 406px">
+    <div ref="target" style="position: relative; height: 426px">
       <transition name="fade">
         <ul class="goods-list" v-if="list.length">
           <li v-for="items in list" :key="items.id">
@@ -23,6 +23,7 @@ import HomePanel from './home-panel.vue'
 import { ref } from '@vue/reactivity'
 import { findHot } from '@/api/home'
 import HomeSkeleton from './home-skeleton.vue'
+import { useLazyData } from '@/hooks'
 export default defineComponent({
   name: 'home-hot',
   setup () {
@@ -30,8 +31,8 @@ export default defineComponent({
     findHot().then((data) => {
       list.value = data.result
     })
-
-    return { list }
+    const { target, result } = useLazyData(findHot)
+    return { target, list: result }
   },
   components: { HomePanel, HomeSkeleton }
 })

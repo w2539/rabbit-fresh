@@ -4,7 +4,7 @@
       <template>
         <XtxMore path="/"></XtxMore>
       </template>
-      <div style="position: relative; height: 406px">
+      <div ref="target" style="position: relative; height: 426px">
         <transition name="fade">
           <ul class="goods-list" v-if="list.length">
             <li v-for="item in list" :key="item.id">
@@ -29,6 +29,7 @@ import { ref } from '@vue/reactivity'
 import HomePanel from './home-panel.vue'
 import XtxMore from '@/components/library/xtx-more.vue'
 import HomeSkeleton from './home-skeleton.vue'
+import { useLazyData } from '@/hooks'
 export default defineComponent({
   name: 'home-new',
   setup () {
@@ -36,7 +37,8 @@ export default defineComponent({
     findNew().then((data) => {
       list.value = data.result
     })
-    return { list }
+    const { target, result } = useLazyData(findNew)
+    return { target, list: result }
   },
   components: { HomePanel, XtxMore, HomeSkeleton }
 })
