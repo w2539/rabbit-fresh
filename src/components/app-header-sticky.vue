@@ -7,7 +7,6 @@
         <RouterLink to="/">品牌</RouterLink>
         <RouterLink to="/">专题</RouterLink>
       </div>
-      c
     </div>
   </div>
 </template>

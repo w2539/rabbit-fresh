@@ -16,6 +16,8 @@
   <HomeNew></HomeNew>
   <!-- 人气推荐 -->
   <HomeHot></HomeHot>
+  <!-- 好物推荐 -->
+  <HomeBrand></HomeBrand>
 </template>
 
 <script>
@@ -24,13 +26,15 @@ import HomeCategory from '@/views/home/components/home-category.vue'
 import HomeBanner from '@/components/home-banner.vue'
 import HomeNew from '@/views/home/components/home-new.vue'
 import HomeHot from '@/views/home/components/home-hot'
+import HomeBrand from './components/home-brand.vue'
 export default {
   name: 'xtx-home-page',
   components: {
     HomeCategory,
     HomeBanner,
     HomeNew,
-    HomeHot
+    HomeHot,
+    HomeBrand
   }
 }
 </script>

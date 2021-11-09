@@ -89,7 +89,7 @@ export default {
     })
     // async setup () {}  这样写会把整个setup 函数变为异步函数
     // 因为在vue3.x中setup函数在模板生成之前加载完成 所以组件不能生效
-    findBrand().then((data) => {
+    findBrand(6).then((data) => {
       // 将brands 的值等于请求过来的参数
       brand.brands = data.result
     })

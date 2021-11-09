@@ -5,7 +5,7 @@ import request from '@/utlis/request'
   @pram {Interger:类型整形 } limit 品牌个数
   @returns:返回类型 Promise
  */
-export const findBrand = (limit = 6) => {
+export const findBrand = (limit) => {
   return request('/home/brand', 'get', { limit })
 }
 // 轮播图
