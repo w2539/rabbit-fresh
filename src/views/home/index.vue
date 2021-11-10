@@ -7,7 +7,7 @@
       <div class="container">
         <!-- 左侧分类 -->
         <HomeCategory />
-        <!-- 轮播图 -->8
+        <!-- 轮播图 -->
         <HomeBanner></HomeBanner>
       </div>
     </div>
@@ -18,6 +18,8 @@
   <HomeHot></HomeHot>
   <!-- 好物推荐 -->
   <HomeBrand></HomeBrand>
+  <!-- 商品区块 -->
+  <HomeProduct></HomeProduct>
 </template>
 
 <script>
@@ -27,6 +29,7 @@ import HomeBanner from '@/components/home-banner.vue'
 import HomeNew from '@/views/home/components/home-new.vue'
 import HomeHot from '@/views/home/components/home-hot'
 import HomeBrand from './components/home-brand.vue'
+import HomeProduct from './components/home-product.vue'
 export default {
   name: 'xtx-home-page',
   components: {
@@ -34,7 +37,8 @@ export default {
     HomeBanner,
     HomeNew,
     HomeHot,
-    HomeBrand
+    HomeBrand,
+    HomeProduct
   }
 }
 </script>
