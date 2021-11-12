@@ -2,7 +2,7 @@
   <!-- 右侧小块推荐模块 -->
   <div class="goods-item">
     <RouterLink to="/" class="image">
-      <img :src="goods.picture" alt="" />
+      <img v-lazy="goods.picture" alt="" />
     </RouterLink>
     <p class="name ellipsis-2">{{ goods.name }}</p>
     <!-- ellipsis一行显示 多余的显示省略号 -->

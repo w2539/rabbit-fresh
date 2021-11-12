@@ -13,7 +13,7 @@
       <!-- 标题底下的所有图片 -->
       <div class="box">
         <RouterLink class="cover" to="/">
-          <img :src="items.picture" alt="" />
+          <img v-lazy="items.picture" alt="" />
           <strong class="label">
             <span>{{ items.name }}</span>
             <span>{{ items.saleInfo }}</span>
