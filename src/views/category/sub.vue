@@ -1,6 +1,9 @@
 <template>
-  <div>Sub-Category</div>
+  <div class="sub-category">
+    <div class="container">11111</div>
+  </div>
 </template>
+
 <script>
 export default {
   name: 'SubCategory'
