@@ -36,7 +36,8 @@ export default {
       // 导入组件
       const component = importFn(key).default
       // 注册组件
-      
+      console.log(component) // 返回的都是对象 对象里面有name
+      // 第一个是名字 第二个是对象
       app.component(component.name, component)
     })
 
