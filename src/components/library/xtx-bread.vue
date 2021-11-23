@@ -33,7 +33,8 @@ export default {
       if (i < items.length - 1) {
         // 如果循环不到最后一个,在后面加上 >
         dymanicItems.push(h('i', { class: 'iconfont icon-angle-right' }))
-        console.log(this.$slots.default())
+        // 打印所有组件信息
+        // console.log(this.$slots.default())
       }
     })
 

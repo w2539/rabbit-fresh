@@ -24,7 +24,11 @@ const routes = [
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
+  routes,
+  scrollBehavior () {
+    // return 期望滚动到哪个的位置
+    return { top: 0, left: 0 }
+  }
 })
 
 export default router
