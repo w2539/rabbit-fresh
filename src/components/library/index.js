@@ -38,6 +38,7 @@ export default {
       // 注册组件
       // console.log(component) // 返回的都是对象 对象里面有name
       // 第一个是名字 第二个是对象
+      // console.log(component.name)
       app.component(component.name, component)
     })
 
