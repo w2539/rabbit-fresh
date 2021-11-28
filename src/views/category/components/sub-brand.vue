@@ -1,4 +1,5 @@
 <template>
+  <!-- 面包屑组件 -->
   <div class="sub-brand">
     <XtxBread>
       <XtxBreadItem to="">首页</XtxBreadItem>

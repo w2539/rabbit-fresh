@@ -1,4 +1,5 @@
 <template>
+  <!-- 图片显示组件 -->
   <RouterLink :to="`/product/${goods.id}`" class="goods-item">
     <img :src="goods.picture" alt="" />
     <p class="name ellipsis">{{ goods.name }}</p>

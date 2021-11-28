@@ -1,30 +1,29 @@
 <template>
-  <!-- 筛选区 -->
   <div class="sub-filter" v-if="filterData && !filterLoading">
     <div class="item">
       <div class="head">品牌：</div>
       <div class="body">
         <a
-          @click="filterData.brands.selectedBrand = items.id"
-          :class="{ active: items.id === filterData.brands.selectedBrand }"
+          @click="changeBrand(item.id)"
+          :class="{ active: item.id === filterData.selectedBrand }"
           href="javascript:;"
-          v-for="items in filterData.brands"
-          :key="items.id"
-          >{{ items.name }}</a
+          v-for="item in filterData.brands"
+          :key="item.id"
+          >{{ item.name }}</a
         >
       </div>
     </div>
-    <div class="item" v-for="sub in filterData.saleProperties" :key="sub.id">
-      <div class="head">{{ sub.name }}</div>
+
+    <div class="item" v-for="item in filterData.saleProperties" :key="item.id">
+      <div class="head">{{ item.name }}：</div>
       <div class="body">
-        <!-- 通过id动态添加点击后的颜色类名 -->
         <a
-          @click="sub.selectedProp = items.id"
-          :class="{ active: sub.selectedProp === items.id }"
+          @click="changeProp(item, prop.id)"
+          :class="{ active: prop.id === item.selectedProp }"
           href="javascript:;"
-          v-for="items in sub.properties"
-          :key="items.id"
-          >{{ items.name }}</a
+          v-for="prop in item.properties"
+          :key="prop.id"
+          >{{ prop.name }}</a
         >
       </div>
     </div>
@@ -37,6 +36,7 @@
     <XtxSkeleton class="item" width="600px" height="40px" />
   </div>
 </template>
+
 <script>
 import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
@@ -59,7 +59,6 @@ export default {
             // 每一组可选的筛选条件缺失 全部 条件，处理下数据加上全部
             // 给每一组数据加上一个选中的ID
             // 1. 品牌
-            console.log(data.result)
             data.result.selectedBrand = null
             data.result.brands.unshift({ id: null, name: '全部' })
             // 2. 属性
@@ -76,7 +75,37 @@ export default {
       { immediate: true }
     )
 
-    return { filterData, filterLoading }
+    // 获取筛选参数的函数
+    const getFilterParams = () => {
+      const obj = { brandId: null, attrs: [] }
+      // 品牌
+      obj.brandId = filterData.value.selectedBrand
+      // 销售属性
+      filterData.value.saleProperties.forEach((item) => {
+        if (item.selectedProp) {
+          const prop = item.properties.find((prop) => prop.id === item.selectedProp)
+          obj.attrs.push({ groupName: item.name, propertyName: prop.name })
+        }
+      })
+      // 参考数据：{brandId:'',attrs:[{groupName:'',propertyName:''},...]}
+      if (obj.attrs.length === 0) obj.attrs = null
+      return obj
+    }
+
+    // 1. 记录当前选择的品牌
+    const changeBrand = (brandId) => {
+      if (filterData.value.selectedBrand === brandId) return
+      filterData.value.selectedBrand = brandId
+      emit('filter-change', getFilterParams())
+    }
+    // 2. 记录呢选择的销售属性
+    const changeProp = (item, propId) => {
+      if (item.selectedProp === propId) return
+      item.selectedProp = propId
+      emit('filter-change', getFilterParams())
+    }
+
+    return { filterData, filterLoading, changeBrand, changeProp }
   }
 }
 </script>
