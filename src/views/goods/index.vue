@@ -1,19 +1,24 @@
 <template>
-  <div class="xtx-goods-page">
+  <div class="xtx-goods-page" v-if="goods">
     <div class="container">
       <!-- 面包屑 -->
       <XtxBread>
         <XtxBreadItem to="/">首页</XtxBreadItem>
-        <XtxBreadItem v-if="goods" :to="'/category/' + goods.categories[0].id">
+        <XtxBreadItem :to="'/category/' + goods.categories[0].id">
           {{ goods.categories[0].name }}
         </XtxBreadItem>
-        <XtxBreadItem v-if="goods" :to="'/category/sub/' + goods.categories[1].id">
+        <XtxBreadItem :to="'/category/sub/' + goods.categories[1].id">
           {{ goods.categories[1].name }}
         </XtxBreadItem>
-        <XtxBreadItem v-if="goods">{{ goods.name }}</XtxBreadItem>
+        <XtxBreadItem>{{ goods.name }}</XtxBreadItem>
       </XtxBread>
       <!-- 商品信息 -->
-      <div class="goods-info"></div>
+      <div class="goods-info">
+        <div class="media">
+          <GoodsImage :images="goods.mainPictures"></GoodsImage>
+        </div>
+        <div class="spec"></div>
+      </div>
       <!-- 商品推荐 -->
       <GoodsRelevant />
       <!-- 商品详情 -->
@@ -36,9 +41,13 @@ import GoodsRelevant from './components/goods-relevant.vue'
 import { ref, watch } from 'vue'
 import { findGoods } from '@/api/product'
 import { useRoute } from 'vue-router'
+import GoodsImage from './components/goods-image.vue'
 export default {
   name: 'XtxGoodsPage',
-  components: { GoodsRelevant },
+  components: {
+    GoodsRelevant,
+    GoodsImage
+  },
   setup () {
     const goods = useGoods()
     return { goods }
@@ -68,8 +77,19 @@ const useGoods = () => {
 
 <style scoped lang="less">
 .goods-info {
+  // 两个大盒子一个左边一个右边
   min-height: 600px;
   background: #fff;
+  display: flex;
+  .media {
+    width: 580px;
+    height: 600px;
+    padding: 30px 50px;
+  }
+  .spec {
+    flex: 1;
+    padding: 30px 30px 30px 0;
+  }
 }
 .goods-footer {
   display: flex;
