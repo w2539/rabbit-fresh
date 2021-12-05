@@ -1,4 +1,5 @@
 <template>
+  <!-- 下方筛选模块 -->
   <div class="sub-sort">
     <div class="sort">
       <a :class="{ active: sortParams.sortField === null }" @click="changeSort(null)" href="javascript:;">默认排序</a>
@@ -50,6 +51,7 @@ export default {
       // 触发 sort-change 事件
       emit('sort-change', sortParams)
     }
+
     const changeCheck = () => {
       // 触发 sort-change 事件
       emit('sort-change', sortParams)

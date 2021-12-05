@@ -1,4 +1,5 @@
 <template>
+<!-- 上方筛选模块 -->
   <div class="sub-filter" v-if="filterData && !filterLoading">
     <div class="item">
       <div class="head">品牌：</div>

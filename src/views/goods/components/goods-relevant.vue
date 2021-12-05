@@ -1,4 +1,5 @@
 <template>
+  <!-- 商品推荐 -->
   <div class="goods-relevant"></div>
 </template>
 

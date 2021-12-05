@@ -4,20 +4,25 @@
       <!-- 面包屑 -->
       <XtxBread>
         <XtxBreadItem to="/">首页</XtxBreadItem>
-        <XtxBreadItem :to="'/category/' + goods.categories[0].id">
+        <XtxBreadItem :to="`/category/${goods.categories[1].id}`">
           {{ goods.categories[0].name }}
         </XtxBreadItem>
-        <XtxBreadItem :to="'/category/sub/' + goods.categories[1].id">
+        <XtxBreadItem :to="`/category/sub/${goods.categories[0].id}`">
           {{ goods.categories[1].name }}
         </XtxBreadItem>
-        <XtxBreadItem>{{ goods.name }}</XtxBreadItem>
+        <Xtx2BreadItem>{{ goods.name }}</Xtx2BreadItem>
       </XtxBread>
       <!-- 商品信息 -->
       <div class="goods-info">
         <div class="media">
           <GoodsImage :images="goods.mainPictures"></GoodsImage>
+          <GoodsSales></GoodsSales>
         </div>
-        <div class="spec"></div>
+        <div class="spec">
+          <!-- 城市组件 -->
+          <GoodsName :goods="goods"></GoodsName>
+          <GoodsSku></GoodsSku>
+        </div>
       </div>
       <!-- 商品推荐 -->
       <GoodsRelevant />
@@ -42,11 +47,17 @@ import { ref, watch } from 'vue'
 import { findGoods } from '@/api/product'
 import { useRoute } from 'vue-router'
 import GoodsImage from './components/goods-image.vue'
+import GoodsSales from './components/goods-sales.vue'
+import GoodsName from './components/goods-name.vue'
+import GoodsSku from './components/goods-sku.vue'
 export default {
   name: 'XtxGoodsPage',
   components: {
     GoodsRelevant,
-    GoodsImage
+    GoodsImage,
+    GoodsSales,
+    GoodsName,
+    GoodsSku
   },
   setup () {
     const goods = useGoods()

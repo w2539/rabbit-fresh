@@ -1,4 +1,5 @@
 <template>
+  <!-- 图片放大镜 -->
   <div class="goods-image">
     <!-- 二倍图 -->
     <div v-show="show" class="large" :style="[{ backgroundImage: `url(${images[currIndex]})` }, largePosition]"></div>
@@ -19,6 +20,7 @@
 
 <script>
 import { reactive, ref, watch } from 'vue'
+// 查看遮罩体以外的坐标 判断是否超出目标
 import { useMouseInElement } from '@vueuse/core'
 export default {
   name: 'GoodsImage',
