@@ -52,6 +52,7 @@ export default {
   },
   setup () {
     const sliders = ref([])
+    // 获取品牌
     findBanner().then((data) => {
       sliders.value = data.result
     })

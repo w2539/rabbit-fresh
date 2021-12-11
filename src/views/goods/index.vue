@@ -14,14 +14,20 @@
       </XtxBread>
       <!-- 商品信息 -->
       <div class="goods-info">
+        <!-- 左侧 -->
         <div class="media">
+          <!-- 放大镜 -->
           <GoodsImage :images="goods.mainPictures"></GoodsImage>
+          <!-- 底部商品促销 -->
           <GoodsSales></GoodsSales>
         </div>
+        <!-- 右侧 -->
         <div class="spec">
           <!-- 城市组件 -->
           <GoodsName :goods="goods"></GoodsName>
-          <GoodsSku></GoodsSku>
+          <!-- 商品选取 -->
+          <!-- skuId="1369155865461919746" -->
+          <GoodsSku :goods="goods" skuId="1369155865461919746" @change="changeSku"></GoodsSku>
         </div>
       </div>
       <!-- 商品推荐 -->
@@ -61,7 +67,16 @@ export default {
   },
   setup () {
     const goods = useGoods()
-    return { goods }
+    const changeSku = (sku) => {
+      console.log(sku)
+      // 修改商品的现价原价库存信息
+      if (sku.skuId) {
+        goods.value.price = sku.price
+        goods.value.oldPrice = sku.oldPrice
+        goods.value.inventory = sku.inventory
+      }
+    }
+    return { goods, changeSku }
   }
 }
 // 获取商品详情
@@ -69,6 +84,7 @@ const useGoods = () => {
   // 出现路由地址商品ID发生变化，但是不会重新初始化组件
   const goods = ref(null)
   const route = useRoute()
+  // 监听路由变化重新获取数据
   watch(
     () => route.params.id,
     (newVal) => {
