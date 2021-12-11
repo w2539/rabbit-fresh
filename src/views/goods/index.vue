@@ -28,6 +28,8 @@
           <!-- 商品选取 -->
           <!-- skuId="1369155865461919746" -->
           <GoodsSku :goods="goods" skuId="1369155865461919746" @change="changeSku"></GoodsSku>
+          <!-- 数量组件 -->
+          <XtxNumbox label="数量" v-model="coust" :max="goods.inventory" />
         </div>
       </div>
       <!-- 商品推荐 -->
@@ -76,7 +78,9 @@ export default {
         goods.value.inventory = sku.inventory
       }
     }
-    return { goods, changeSku }
+    // 商品数量
+    const coust = ref(1)
+    return { goods, changeSku, coust }
   }
 }
 // 获取商品详情

@@ -96,7 +96,6 @@ const initSelectedStatus = (goods, skuId) => {
   const sku = goods.skus.find((sku) => sku.id === skuId)
   // 如果存在
   if (sku) {
-    console.log(1)
     // 在goods.specs中寻找与sku中名字相同的值
     goods.specs.forEach((specs, i) => {
       // specs 是所有种类
