@@ -54,7 +54,7 @@
         </div>
       </div>
     </div>
-    <XtxPagination></XtxPagination>
+    <XtxPagination @current-change="changePagerFn"></XtxPagination>
   </div>
 </template>
 <script>
@@ -118,11 +118,13 @@ export default {
       reqParams.page = 1
     }
     const commentList = ref([])
+    const total = ref(0)
     watch(
       reqParams,
       () => {
         findGoodsCommentList(goods.id, reqParams).then((data) => {
           commentList.value = data.result.items
+          total.value = data.result.counts
           console.log(commentList)
         })
       },
@@ -137,7 +139,11 @@ export default {
     const formatNickname = (nickname) => {
       return nickname.substr(0, 1) + '****' + nickname.substr(-1)
     }
-    return { commentInfo, changeTab, currentTagIndex, reqParams, commentList, formatNickname, formatSpecs, changeSort }
+    // 实现分页切换
+    const changePagerFn = (newPage) => {
+      reqParams.page = newPage
+    }
+    return { commentInfo, changeTab, currentTagIndex, reqParams, commentList, formatNickname, formatSpecs, changeSort, changePagerFn }
   }
 }
 </script>
