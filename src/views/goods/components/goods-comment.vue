@@ -54,17 +54,20 @@
         </div>
       </div>
     </div>
+    <XtxPagination></XtxPagination>
   </div>
 </template>
 <script>
 import { findGoodsCommentInfo, findGoodsCommentList } from '@/api/product'
 import { inject, reactive, ref, watch } from 'vue'
 import GoodsCommentImage from './goods-comment-image.vue'
+import XtxPagination from '@/components/library/xtx-pagination.vue'
 export default {
   name: 'GoodsComment',
   props: {},
   components: {
-    GoodsCommentImage
+    GoodsCommentImage,
+    XtxPagination
   },
   setup (props) {
     const commentInfo = ref(null)
@@ -130,7 +133,7 @@ export default {
     const formatSpecs = (specs) => {
       return specs.reduce((p, c) => `${p} ${c.name}：${c.nameValue}`, '').trim()
     }
-    // 名字隐藏输入
+    // 名字隐藏
     const formatNickname = (nickname) => {
       return nickname.substr(0, 1) + '****' + nickname.substr(-1)
     }

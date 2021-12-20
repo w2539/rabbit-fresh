@@ -29,7 +29,7 @@
           <!-- skuId="1369155865461919746" -->
           <GoodsSku :goods="goods" skuId="1369155865461919746" @change="changeSku"></GoodsSku>
           <!-- 数量组件 -->
-          <XtxNumbox label="数量" v-model="coust" :max="goods.inventory" />
+          <XtxNumbox label="数量" v-model="coust" :max="goods.inventory" :goods="goods" />
           <!-- 按钮组件 -->
           <XtxButton type="primary" style="margin-top: 20px">加入购物车</XtxButton>
         </div>
@@ -81,18 +81,21 @@ export default {
   setup () {
     const goods = useGoods()
     provide('goods', goods)
+    const coust = ref(1)
 
     const changeSku = (sku) => {
       console.log(sku)
       // 修改商品的现价原价库存信息
       if (sku.skuId) {
-        goods.value.price = sku.price
-        goods.value.oldPrice = sku.oldPrice
+        goods.value.price = 145
+        // goods.value.oldPrice = sku.oldPrice
         goods.value.inventory = sku.inventory
       }
+      goods.value.price = sku.price * coust.value
     }
     // 商品数量
-    const coust = ref(1)
+    watch(coust, () => {})
+
     return { goods, changeSku, coust }
   }
 }

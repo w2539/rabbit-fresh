@@ -28,6 +28,10 @@ export default {
     },
     label: {
       type: String
+    },
+    goods: {
+      type: Object,
+      default: () => {}
     }
   },
   setup (props, { emit }) {
