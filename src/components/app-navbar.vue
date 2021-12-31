@@ -10,12 +10,12 @@
             </a>
           </li>
           <li>
-            <a href="javascript:;">退出登录</a>
+            <a href="javascript:;" @click="quit">退出登录</a>
           </li>
         </template>
         <template v-else>
           <li>
-            <a href="javascript:;">请先登录</a>
+            <router-link to="/login">登陆</router-link>
           </li>
           <li>
             <a href="javascript:;">免费注册</a>
@@ -48,6 +48,7 @@
 // 在项目里直接使用 vuex里面的方法
 import { useStore } from 'vuex'
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 export default {
   name: 'AppTopnav',
   setup () {
@@ -57,7 +58,13 @@ export default {
       // 原理是vuex的特性
       return store.state.user.profile
     })
-    return { profile }
+
+    const router = useRouter()
+    const quit = () => {
+      store.commit('user/setUser', {})
+      router.push('/login')
+    }
+    return { profile, quit }
   }
 }
 </script>

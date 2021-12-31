@@ -1,5 +1,5 @@
 <template>
-<!-- 无限加载组件 -->
+  <!-- 无限加载组件 -->
   <div class="xtx-infinite-loading" ref="target">
     <div class="loading" v-if="loading">
       <span class="img"></span>
