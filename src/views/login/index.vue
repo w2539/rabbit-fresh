@@ -1,49 +1,43 @@
 <template>
-  <div class="index">
-    <!-- 头部 -->
-    <LoginHeader></LoginHeader>
-    <!-- 中间内容 -->
-    <section class="login-section">
-      <div class="wrapper">
-        <nav>
-          <a @click="activeName = 'account'" :class="{ active: activeName === 'account' }" href="javascript:;">账户登录</a>
-          <a @click="activeName = 'qrcode'" :class="{ active: activeName === 'qrcode' }" href="javascript:;">扫码登录</a>
-        </nav>
-        <!-- 表单 -->
-        <div v-if="activeName === 'account'" class="account-box">
-          <LoginForm></LoginForm>
-        </div>
-        <!-- 二维码 -->
-        <div v-if="activeName === 'qrcode'" class="qrcode-box">
-          <img src="@/assets/images/qrcode.jpg" alt="" />
-          <p>打开 <a href="javascript:;">小兔鲜App</a> 扫码登录</p>
-        </div>
+  <LoginHeader>欢迎登录</LoginHeader>
+  <section class="login-section">
+    <div class="wrapper">
+      <nav>
+        <a @click="activeName = 'account'" :class="{ active: activeName === 'account' }" href="javascript:;">账户登录</a>
+        <a @click="activeName = 'qrcode'" :class="{ active: activeName === 'qrcode' }" href="javascript:;">扫码登录</a>
+      </nav>
+      <!-- 帐号登录&扫码登录 -->
+      <LoginForm v-if="activeName === 'account'">表单</LoginForm>
+      <div v-if="activeName === 'qrcode'" class="qrcode-box">
+        <img src="@/assets/images/qrcode.jpg" alt="" />
+        <p>打开 <a href="javascript:;">小兔鲜App</a> 扫码登录</p>
       </div>
-    </section>
-
-    <!-- 底部 -->
-    <LoginFooter></LoginFooter>
-  </div>
+    </div>
+  </section>
+  <LoginFooter />
 </template>
-
 <script>
-import LoginHeader from './components/login-header.vue'
-import LoginFooter from './components/login-footer.vue'
+import LoginHeader from './components/login-header'
+import LoginFooter from './components/login-footer'
+import LoginForm from './components/login-form'
 import { ref } from 'vue'
-import LoginForm from './components/login-form.vue'
+import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
 export default {
-  name: 'index',
+  name: 'PageLogin',
+  components: { LoginHeader, LoginFooter, LoginForm },
   setup () {
     const activeName = ref('account')
 
-    return {
-      activeName
-    }
-  },
-  components: { LoginHeader, LoginFooter, LoginForm }
+    // 存储回跳地址
+    const store = useStore()
+    const route = useRoute()
+    store.commit('user/setRedirectUrl', route.query.redirectUrl || '/')
+
+    return { activeName }
+  }
 }
 </script>
-
 <style scoped lang="less">
 .login-section {
   background: url(../../assets/images/login-bg.png) no-repeat center / cover;
@@ -82,16 +76,16 @@ export default {
       }
     }
   }
-  // 二维码容器
-  .qrcode-box {
-    text-align: center;
-    padding-top: 40px;
-    p {
-      margin-top: 20px;
-      a {
-        color: @xtxColor;
-        font-size: 16px;
-      }
+}
+// 二维码容器
+.qrcode-box {
+  text-align: center;
+  padding-top: 40px;
+  p {
+    margin-top: 20px;
+    a {
+      color: @xtxColor;
+      font-size: 16px;
     }
   }
 }

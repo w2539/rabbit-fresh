@@ -4,53 +4,57 @@
       <a @click="isMsgLogin = false" href="javascript:;" v-if="isMsgLogin"> <i class="iconfont icon-user"></i> 使用账号登录 </a>
       <a @click="isMsgLogin = true" href="javascript:;" v-else> <i class="iconfont icon-msg"></i> 使用短信登录 </a>
     </div>
-    <Form class="form" :validation-schema="schema" v-slot="{ errors }" autocomplete="off" ref="formCom">
+    <Form ref="formCom" class="form" :validation-schema="schema" v-slot="{ errors }" autocomplete="off">
       <template v-if="!isMsgLogin">
         <div class="form-item">
           <div class="input">
             <i class="iconfont icon-user"></i>
-            <Field
-              v-model="form.account"
-              :class="{ error: errors.account }"
-              name="account"
-              type="text"
-              placeholder="请输入用户名或手机号"
-            />
+            <Field :class="{ error: errors.account }" v-model="form.account" name="account" type="text" placeholder="请输入用户名" />
           </div>
-
-          <!-- {{ errors.account }} -->
-          <div class="error" v-if="errors.account"><i class="iconfont icon-warning" />{{ errors.account }}</div>
+          <div class="error" v-if="errors.account">
+            <i class="iconfont icon-warning" />
+            {{ errors.account }}
+          </div>
         </div>
         <div class="form-item">
           <div class="input">
             <i class="iconfont icon-lock"></i>
-            <Field v-model="form.password" name="password" :class="{ error: errors.password }" type="password" placeholder="请输入密码" />
+            <Field :class="{ error: errors.password }" v-model="form.password" name="password" type="password" placeholder="请输入密码" />
           </div>
-          <div class="error" v-if="errors.password"><i class="iconfont icon-warning" />{{ errors.password }}</div>
+          <div class="error" v-if="errors.password">
+            <i class="iconfont icon-warning" />
+            {{ errors.password }}
+          </div>
         </div>
       </template>
       <template v-else>
         <div class="form-item">
           <div class="input">
             <i class="iconfont icon-user"></i>
-            <Field v-model="form.mobile" name="mobile" type="text" placeholder="请输入手机号" :class="{ error: errors.mobile }" />
+            <Field :class="{ error: errors.mobile }" v-model="form.mobile" name="mobile" type="text" placeholder="请输入手机号" />
           </div>
-          <div class="error" v-if="errors.mobile"><i class="iconfont icon-warning" />{{ errors.mobile }}</div>
+          <div class="error" v-if="errors.mobile">
+            <i class="iconfont icon-warning" />
+            {{ errors.mobile }}
+          </div>
         </div>
         <div class="form-item">
           <div class="input">
             <i class="iconfont icon-code"></i>
-            <Field v-model="form.code" name="code" type="password" placeholder="请输入验证码" :class="{ error: errors.code }" />
-            <span class="code" @click="send()">
+            <Field :class="{ error: errors.code }" v-model="form.code" name="code" type="text" placeholder="请输入验证码" />
+            <span @click="send()" class="code">
               {{ time === 0 ? '发送验证码' : `${time}秒后发送` }}
             </span>
           </div>
-          <div class="error" v-if="errors.code"><i class="iconfont icon-warning" />{{ errors.code }}</div>
+          <div class="error" v-if="errors.code">
+            <i class="iconfont icon-warning" />
+            {{ errors.code }}
+          </div>
         </div>
       </template>
       <div class="form-item">
         <div class="agree">
-          <Field as="XtxCheckbox" v-model="form.isAgree" name="isAgree"></Field>
+          <Field as="XtxCheckbox" name="isAgree" v-model="form.isAgree" />
           <span>我已同意</span>
           <a href="javascript:;">《隐私条款》</a>
           <span>和</span>
@@ -61,10 +65,14 @@
           {{ errors.isAgree }}
         </div>
       </div>
-      <a href="javascript:;" class="btn" @click="login()">登录</a>
+      <a @click="login()" href="javascript:;" class="btn">登录</a>
     </Form>
     <div class="action">
-      <img src="https://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_7.png" alt="" />
+      <a
+        href="https://graph.qq.com/oauth2.0/authorize?client_id=100556005&response_type=token&scope=all&redirect_uri=http%3A%2F%2Fwww.corho.com%3A8080%2F%23%2Flogin%2Fcallback"
+      >
+        <img src="https://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_7.png" alt="" />
+      </a>
       <div class="url">
         <a href="javascript:;">忘记密码</a>
         <a href="javascript:;">免费注册</a>
@@ -72,15 +80,14 @@
     </div>
   </div>
 </template>
-
 <script>
 import { onUnmounted, reactive, ref, watch } from 'vue'
 import { Form, Field } from 'vee-validate'
 import schema from '@/utlis/vee-validate-schema.js'
+import Message from '@/components/library/Message'
 import { userAccountLogin, userMobileLogin, userMobileLoginMsg } from '@/api/user'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
-import Message from '@/components/library/Message'
 import { useIntervalFn } from '@vueuse/core'
 export default {
   name: 'LoginForm',
@@ -166,6 +173,7 @@ export default {
             nickname,
             token
           })
+
           // 进行跳转
           router.push(route.query.redirectUrl || '/')
           // 成功消息提示
@@ -231,7 +239,6 @@ export default {
   }
 }
 </script>
-
 <style scoped lang="less">
 // 账号容器
 .account-box {

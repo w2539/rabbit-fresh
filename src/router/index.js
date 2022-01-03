@@ -8,6 +8,7 @@ import TopCategory from '@/views/category/index.vue'
 import SubCategory from '@/views/category/sub.vue'
 const Goods = () => import('@/views/goods/index')
 const Login = () => import('@/views/login/index')
+const Callback = () => import('@/views/login/callback.vue')
 
 const routes = [
   {
@@ -23,7 +24,8 @@ const routes = [
       { path: '/product/:id', component: Goods }
     ]
   },
-  { path: '/login', component: Login }
+  { path: '/login', component: Login },
+  { path: '/login/callback', component: Callback }
 ]
 
 const router = createRouter({
