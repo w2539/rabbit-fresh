@@ -11,11 +11,8 @@
         <i class="iconfont icon-search"></i>
         <input type="text" placeholder="搜一搜" />
       </div>
-      <div class="cart">
-        <a class="curr" href="#">
-          <i class="iconfont icon-cart"></i>
-          <em>2</em>
-        </a>
+      <div>
+        <appHeaderCart></appHeaderCart>
       </div>
     </div>
   </header>
@@ -23,10 +20,12 @@
 
 <script>
 import appHandercc from './app-handercc.vue'
+import appHeaderCart from './app-header-cart.vue'
 export default {
   name: 'AppHeader',
   components: {
-    appHandercc
+    appHandercc,
+    appHeaderCart
   }
 }
 </script>

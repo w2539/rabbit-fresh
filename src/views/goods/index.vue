@@ -31,7 +31,7 @@
           <!-- 数量组件 -->
           <XtxNumbox label="数量" v-model="coust" :max="goods.inventory" :goods="goods" />
           <!-- 按钮组件 -->
-          <XtxButton type="primary" style="margin-top: 20px">加入购物车</XtxButton>
+          <XtxButton type="primary" style="margin-top: 20px" @click="insertCart">加入购物车</XtxButton>
         </div>
       </div>
       <!-- 商品推荐 -->
@@ -66,6 +66,8 @@ import GoodsSku from './components/goods-sku.vue'
 import GoodsTabs from './components/goods-tabs.vue'
 import GoodsHot from './components/goods-hot.vue'
 import GoodsWarn from './components/goods-warn.vue'
+import Message from '@/components/library/Message'
+import { useStore } from 'vuex'
 export default {
   name: 'XtxGoodsPage',
   components: {
@@ -82,23 +84,51 @@ export default {
     const goods = useGoods()
     provide('goods', goods)
     const coust = ref(1)
+    // 存储sku组件传出的值
 
     const changeSku = (sku) => {
-      console.log(sku)
       // 修改商品的现价原价库存信息
       if (sku.skuId) {
         goods.value.price = 145
-        // goods.value.oldPrice = sku.oldPrice
+        goods.value.oldPrice = sku.oldPrice
         goods.value.inventory = sku.inventory
       }
-      goods.value.price = sku.price * coust.value
+      currSku.value = sku
     }
-    // 商品数量
-    watch(coust, () => {})
+    // 加入购物车
+    const store = useStore()
+    const currSku = ref(null)
+    const insertCart = () => {
+      if (currSku.value && currSku.value.skuId) {
+        // id skuId name attrsText picture price nowPrice selected stock count isEffective
+        const { skuId, specsText: attrsText, inventory: stock } = currSku.value
+        const { id, name, price, mainPictures } = goods.value
+        store
+          .dispatch('cart/insertCart', {
+            skuId,
+            attrsText,
+            stock,
+            id,
+            name,
+            price,
+            nowPrice: price,
+            picture: mainPictures[0],
+            selected: true,
+            isEffective: true,
+            count: coust.value
+          })
+          .then(() => {
+            Message({ type: 'success', text: '加入购物车成功' })
+          })
+      } else {
+        Message({ text: '请选择完整规格' })
+      }
+    }
 
-    return { goods, changeSku, coust }
+    return { goods, changeSku, coust, insertCart }
   }
 }
+
 // 获取商品详情
 const useGoods = () => {
   // 出现路由地址商品ID发生变化，但是不会重新初始化组件
