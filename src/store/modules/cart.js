@@ -12,7 +12,6 @@ export default {
     // 有效商品列表
     validList (state) {
       // 有效商品：库存大于0  stock  商品有效标识为  true  isEffective
-      console.log(state)
       return state.list.filter(goods => goods.stock > 0 && goods.isEffective)
     },
     // 有效商品总件数
@@ -23,6 +22,26 @@ export default {
     validAmount (state, getters) {
       // return (getters.validList.reduce((p, c) => p + c.nowPrice * 100 * c.count, 0) / 100).toFixed(2)
       return getters.validList.reduce((p, c) => p + Math.round(c.nowPrice * 100) * c.count, 0) / 100
+    },
+    // 无效商品列表  与有效商品取反
+    invalidList (state) {
+      return state.list.filter(goods => !goods.stock > 0 && !goods.isEffective)
+    },
+    // 选中商品列表
+    selectedList (state) {
+      return state.list.filter(goods => goods.selected)
+    },
+    // 选中商品件数
+    selectedTotal (state, getters) {
+      return getters.selectedList.reduce((p, c) => p + c.count, 0)
+    },
+    // 选中商品总金额
+    selectedAmount (state, getters) {
+      return getters.selectedList.reduce((p, c) => p + Math.round(c.nowPrice * 100) * c.count, 0) / 100
+    },
+    // 是否全选  有效列表的长度是否和选中列表的长度一致 或者等于零
+    isCheckAll (state, getters) {
+      return getters.validList.length === getters.selectedList.length && getters.selectedList.length !== 0
     }
   },
   mutations: {
@@ -58,11 +77,46 @@ export default {
 
     // 删除购物车商品
     deleteCart (state, skuId) {
+      // 根据 id 找到商品
       const index = state.list.findIndex(item => item.skuId === skuId)
+      // 删除
       state.list.splice(index, 1)
     }
   },
   actions: {
+
+    // 全选
+    checkAllCart (ctx, selected) {
+      return new Promise((resolve, reject) => {
+        // vuex 方法 rootStata 获取其他文件数据
+        if (ctx.rootState.user.token) {
+          // 已登录 TODO
+        } else {
+          // 未登录
+          // 将全选按钮的状态用循环给 每一个商品
+          ctx.getters.validList.forEach(items => {
+            ctx.commit('updateCart', { skuId: items.skuId, selected })
+          })
+          // 返回结果 代表执行成功
+          resolve()
+        }
+      })
+    },
+    // 修改商品
+    updateCart (ctx, goods) {
+      return new Promise((resolve, reject) => {
+        // vuex 方法 rootStata 获取其他文件数据
+        if (ctx.rootState.user.token) {
+          // 已登录 TODO
+        } else {
+          // 未登录
+          ctx.commit('updateCart', goods)
+          // 返回结果 代表执行成功
+          resolve()
+        }
+      })
+    },
+    // 添加商品
     insertCart (ctx, goods) {
       return new Promise((resolve, reject) => {
         // vuex 方法 rootStata 获取其他文件数据

@@ -4,6 +4,7 @@
 // vue3.0插件写法要素：导出一个对象，有install函数，默认传入了app应用实例，app基础之上扩展
 import defaultImg from '@/assets/images/200.png'
 import Message from './Message'
+import XtxConfirm from './xtx-confirm.vue'
 
 // import XtxSkeleton from './xtx-skeleton.vue'
 // import XtxCarousel from './xtx-carousel.vue'
@@ -43,9 +44,17 @@ export default {
       app.component(component.name, component)
     })
 
-    // 定义指令
+    // 定义指令 优点不用导入 挂载原型
+
+    // this.$message({
+    //   message: '恭喜你，登陆成功',
+    //   type: 'success',
+    //   center: true
+    // })
+
     defineDirective(app)
     app.config.globalProperties.$message = Message // 原型函数
+    app.config.globalProperties.$confirm = XtxConfirm // 原型函数
   }
 }
 
