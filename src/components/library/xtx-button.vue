@@ -49,20 +49,24 @@ export default {
   height: 32px;
   font-size: 14px;
 }
+// 无色
 .default {
   border-color: #e4e4e4;
   color: #666;
 }
+// 深绿色
 .primary {
   border-color: @xtxColor;
   background: @xtxColor;
   color: #fff;
 }
+// 浅绿色
 .plain {
   border-color: @xtxColor;
   color: @xtxColor;
   background: lighten(@xtxColor, 50%);
 }
+// 黑色
 .gray {
   border-color: #ccc;
   background: #ccc;

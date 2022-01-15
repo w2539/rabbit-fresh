@@ -84,7 +84,45 @@ export default {
     }
   },
   actions: {
-
+    // 修改sku规格
+    updateCartSku (ctx, { oldSkuId, newSku }) {
+      return new Promise((resolve, reject) => {
+        // vuex 方法 rootStata 获取其他文件数据
+        if (ctx.rootState.user.token) {
+          // 已登录 TODO
+        } else {
+          // 未登录
+          // 1. 找出旧的商品信息
+          // 2. 删除旧商品数据
+          // 3. 根据新的sku信息和旧的商品信息，合并成一条新的购物车商品数据
+          // 4. 添加新的商品
+          const oldGoods = ctx.state.list.find(item => item.skuId === oldSkuId)
+          ctx.commit('deleteCart', oldSkuId)
+          const { skuId, price: nowPrice, specsText: attrsText, inventory: stock } = newSku
+          const newGoods = { ...oldGoods, skuId, nowPrice, attrsText, stock }
+          ctx.commit('insertCart', newGoods)
+          resolve()
+        }
+      })
+    },
+    // 批量刪除
+    batchDeleteCart (ctx, isClear) {
+      return new Promise((resolve, reject) => {
+        // vuex 方法 rootStata 获取其他文件数据
+        if (ctx.rootState.user.token) {
+          // 已登录 TODO
+        } else {
+          // 未登录
+          // 将全选按钮的状态用循环给 每一个商品
+          // 如果参数存在 循环无效效列表  参数不存在循环有效列表
+          ctx.getters[isClear ? ' invalidList' : 'selectedList'].forEach(items => {
+            ctx.commit('deleteCart', items.skuId)
+          })
+          // 返回结果 代表执行成功
+          resolve()
+        }
+      })
+    },
     // 全选
     checkAllCart (ctx, selected) {
       return new Promise((resolve, reject) => {
