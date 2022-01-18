@@ -173,11 +173,12 @@ export default {
             nickname,
             token
           })
-
-          // 进行跳转
-          router.push(route.query.redirectUrl || '/')
-          // 成功消息提示
-          Message({ type: 'success', text: '登录成功' })
+          store.dispatch('cart/mergeLocalCart').then(() => {
+            // 进行跳转
+            router.push(route.query.redirectUrl || '/')
+            // 成功消息提示
+            Message({ type: 'success', text: '登录成功' })
+          })
         } catch (e) {
           // 失败提示
           if (e.response.data) {
