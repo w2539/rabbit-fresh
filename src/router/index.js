@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import store from '@/store'
 
 // const Layout = () => import('@/views/Layout')
 // const Home = () => import('@/views/home')
@@ -41,6 +42,18 @@ const router = createRouter({
     // return 期望滚动到哪个的位置
     return { top: 0, left: 0 }
   }
+})
+
+// 前置导航守卫
+router.beforeEach((to, from, next) => {
+  // 用户信息
+  const { token } = store.state.user.profile
+  // 跳转去member开头的地址却没有登录
+  if (to.path.startsWith('/member') && !token) {
+    // login 登陆加上来源页  encodeURIComponent 解析地址防止报错
+    return next('/login?redirectUrl=' + encodeURIComponent(to.fullPath))
+  }
+  next()
 })
 
 export default router

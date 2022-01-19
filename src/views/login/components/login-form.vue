@@ -173,7 +173,7 @@ export default {
             nickname,
             token
           })
-          store.dispatch('cart/mergeLocalCart').then(() => {
+          store.dispatch('cart/mergeCart').then(() => {
             // 进行跳转
             router.push(route.query.redirectUrl || '/')
             // 成功消息提示

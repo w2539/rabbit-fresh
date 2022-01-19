@@ -14,7 +14,7 @@
 <script>
 import { ref } from 'vue'
 import { onClickOutside } from '@vueuse/core'
-import { getSpecsAndSkus } from '@/api/cart'
+import { getGoodsSku } from '@/api/cart'
 import GoodsSku from '@/views/goods/components/goods-sku.vue'
 import XtxButton from '@/components/library/xtx-button.vue'
 
@@ -45,7 +45,7 @@ export default {
       visible.value = true
       // 点击还没获取到数据时 转圈
       loading.value = true
-      getSpecsAndSkus(props.skuId).then((data) => {
+      getGoodsSku(props.skuId).then((data) => {
         goods.value = data.result
         // 加载到数据 显示数据
         loading.value = false
