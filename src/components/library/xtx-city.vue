@@ -2,7 +2,7 @@
   <div class="xtx-city" ref="target">
     <div class="select" @click="toggle" :class="{ active: visible }">
       <!-- 没有登陆所以默认值 -->
-      <span v-if="!fullLocation" class="placeholder">请选择配送地址</span>
+      <span class="placeholder" v-if="!fullLocation">{{ placeholder }}</span>
       <span v-else class="value">{{ fullLocation }}</span>
       <i class="iconfont icon-angle-down"></i>
     </div>
@@ -23,6 +23,10 @@ export default {
     fullLocation: {
       type: String,
       default: ''
+    },
+    placeholder: {
+      type: String,
+      default: '请选择配送地区'
     }
   },
   setup (props, { emit }) {
@@ -51,8 +55,10 @@ export default {
       // 默认为真 顺序不能换
       visible.value ? close() : open()
     }
-    const target = ref(null)
 
+    // 定义ref
+    const target = ref(null)
+    // 点击其他地方关闭
     onClickOutside(target, () => {
       close()
     })
@@ -72,7 +78,9 @@ export default {
     })
 
     const changeResult = reactive({
+      // 省级的编号
       provinceCode: '',
+      // 省级的名字
       provinceName: '',
       cityCode: '',
       cityName: '',
