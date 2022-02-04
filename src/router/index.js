@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import store from '@/store'
+import { h } from 'vue'
 
 // const Layout = () => import('@/views/Layout')
 // const Home = () => import('@/views/home')
@@ -16,6 +17,8 @@ const PayIndex = () => import('@/views/member/pay/index.vue')
 const PayResult = () => import('@/views/member/pay/result')
 const MemberLayout = () => import('@/views/member/Layout')
 const MemberHome = () => import('@/views/member/home')
+const MemberOrder = () => import('@/views/member/order')
+const MemberOrderDetail = () => import('@/views/member/order/detail')
 
 const routes = [
   {
@@ -40,7 +43,16 @@ const routes = [
         path: '/member',
         component: MemberLayout,
         children: [
-          { path: '/member', component: MemberHome }
+          { path: '/member', component: MemberHome },
+          {
+            path: '/member/order/',
+            // vue3.0 需要有嵌套关系才能模糊匹配
+            component: { render: () => h(<RouterView/>) },
+            children: [
+              { path: '', component: MemberOrder },
+              { path: ':id', component: MemberOrderDetail }
+            ]
+          }
         ]
       }
     ]
