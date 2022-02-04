@@ -32,7 +32,7 @@ export default {
     // })
     // })
 
-    // 组合API
+    // 组合API y 页面滚动的值
     const { y } = useWindowScroll()
 
     return { y }

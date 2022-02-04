@@ -5,6 +5,8 @@ export default {
     profile: {
       id: '',
       nickname: '',
+      account: '',
+      // 头像
       avatar: '',
       token: '',
       mobile: ''

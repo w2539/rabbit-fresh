@@ -137,6 +137,7 @@ export default {
     }
     // 名字隐藏
     const formatNickname = (nickname) => {
+      // 第0到1个字符 **** 最后一个字符 -1
       return nickname.substr(0, 1) + '****' + nickname.substr(-1)
     }
     // 实现分页切换

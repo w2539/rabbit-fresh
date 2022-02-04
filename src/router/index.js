@@ -14,6 +14,9 @@ const Cart = () => import('@/views/cart/index.vue')
 const PayCheckout = () => import('@/views/member/pay/checkout')
 const PayIndex = () => import('@/views/member/pay/index.vue')
 const PayResult = () => import('@/views/member/pay/result')
+const MemberLayout = () => import('@/views/member/Layout')
+const MemberHome = () => import('@/views/member/home')
+
 const routes = [
   {
     path: '/',
@@ -32,12 +35,19 @@ const routes = [
       },
       { path: '/member/checkout', component: PayCheckout },
       { path: '/member/pay', component: PayIndex },
-      { path: '/pay/callback', component: PayResult }
-
+      { path: '/pay/callback', component: PayResult },
+      {
+        path: '/member',
+        component: MemberLayout,
+        children: [
+          { path: '/member', component: MemberHome }
+        ]
+      }
     ]
   },
   { path: '/login', component: Login },
   { path: '/login/callback', component: Callback }
+
 ]
 
 const router = createRouter({

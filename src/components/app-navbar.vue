@@ -4,7 +4,7 @@
       <ul>
         <template v-if="profile.token">
           <li>
-            <a href="javascript:;">
+            <a href="javascript:;" @click="$router.push('/member')">
               <i class="iconfont icon-user"></i>
               {{ profile.account }}
             </a>
