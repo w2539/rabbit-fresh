@@ -15,15 +15,18 @@ import { computed, ref, watch } from 'vue'
 export default {
   name: 'XtxPagination',
   props: {
+    // 总条数
     total: {
       type: Number,
       default: 100
     },
     currentPage: {
+      // 当前第几页
       type: Number,
       default: 1
     },
     pageSize: {
+      // 每页数量
       type: Number,
       default: 10
     }

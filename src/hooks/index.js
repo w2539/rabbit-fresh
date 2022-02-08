@@ -1,6 +1,6 @@
 // hooks 封装逻辑，提供响应式数据。
 import { useIntersectionObserver, useIntervalFn } from '@vueuse/core'
-import { onMounted, ref } from 'vue'
+import { onUnmounted, ref } from 'vue'
 import dayjs from 'dayjs'
 /**
  * 数据懒加载函数
@@ -50,7 +50,7 @@ export const usePayTime = () => {
     false
   )
   // 组件销毁停止计时
-  onMounted(() => {
+  onUnmounted(() => {
     pause()
   })
   // 开启定时器 countdown 倒计时时间
