@@ -56,7 +56,7 @@
         <!-- 已完成：查看详情，再次购买，申请售后 -->
         <!-- 已取消：查看详情 -->
         <XtxButton v-if="order.orderState === 1" type="primary" size="small">立即付款</XtxButton>
-        <XtxButton v-if="order.orderState === 3" type="primary" size="small">确认收货</XtxButton>
+        <XtxButton @click="$emit('on-confirm-order')" v-if="order.orderState === 3" type="primary" size="small">确认收货</XtxButton>
         <p><a href="javascript:;">查看详情</a></p>
         <p v-if="order.orderState === 1" @click="$emit('on-cancel-order', order)"><a href="javascript:;">取消订单</a></p>
         <p v-if="[2, 3, 4, 5].includes(order.orderState)"><a href="javascript:;">再次购买</a></p>
@@ -77,7 +77,7 @@ export default {
       default: () => ({})
     }
   },
-  emits: ['on-cancel-order', 'delete-order'],
+  emits: ['on-cancel-order', 'delete-order', 'on-confirm-order'],
   setup (props) {
     const { start, textTime } = usePayTime()
     start(props.order.countdown)

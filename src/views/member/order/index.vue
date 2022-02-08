@@ -14,6 +14,7 @@
         :order="item"
         @on-cancel-order="handlerCancel"
         @delete-order="handlerDelete(item)"
+        @on-confirm-order="handlerConfirm(item)"
       />
     </div>
 
@@ -34,7 +35,7 @@ import { cancelReason, orderStatus } from '@/api/constants'
 import { reactive, ref, watch } from 'vue'
 import XtxPagination from '@/components/library/xtx-pagination.vue'
 import OrderItem from './components/order-item.vue'
-import { deleteOrder, findOrderList } from '@/api/order'
+import { ConfirmOrder, deleteOrder, findOrderList } from '@/api/order'
 import OrderCancle from './components/order-cancle.vue'
 import confirm from '@/components/library/confirm'
 import Message from '@/components/library/Message'
@@ -90,6 +91,7 @@ export default {
         })
         .catch(() => {})
     }
+
     return {
       active,
       orderItem,
@@ -102,7 +104,8 @@ export default {
       cancelReason,
       ...useCancel(),
       getOrderList,
-      handlerDelete
+      handlerDelete,
+      ...useConfirm()
     }
   },
   components: { XtxPagination, OrderItem, OrderCancle }
@@ -116,6 +119,22 @@ const useCancel = () => {
   return {
     orderCancelCom,
     handlerCancel
+  }
+}
+const useConfirm = () => {
+  //  确认收货
+  const handlerConfirm = (item) => {
+    confirm({ text: '确认到货吗？确认后将货款发给卖家' })
+      .then(() => {
+        ConfirmOrder(item.id).then(() => {
+          Message({ type: 'success', text: '收货成功' })
+          item.orderState = 4
+        })
+      })
+      .catch(() => {})
+  }
+  return {
+    handlerConfirm
   }
 }
 </script>
