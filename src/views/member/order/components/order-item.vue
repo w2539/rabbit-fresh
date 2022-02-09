@@ -34,7 +34,7 @@
         <!-- 待评价：评价商品 -->
         <!-- 已完成：查看评价 -->
         <p v-if="order.orderState === 3">
-          <a href="javascript:;" class="green">查看物流</a>
+          <a @click="$emit('on-logistics-order')" href="javascript:;" class="green">查看物流</a>
         </p>
         <p v-if="order.orderState === 4">
           <a href="javascript:;" class="green">评价商品</a>
@@ -77,7 +77,7 @@ export default {
       default: () => ({})
     }
   },
-  emits: ['on-cancel-order', 'delete-order', 'on-confirm-order'],
+  emits: ['on-cancel-order', 'delete-order', 'on-confirm-order', 'on-logistics-order'],
   setup (props) {
     const { start, textTime } = usePayTime()
     start(props.order.countdown)

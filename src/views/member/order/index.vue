@@ -15,6 +15,7 @@
         @on-cancel-order="handlerCancel"
         @delete-order="handlerDelete(item)"
         @on-confirm-order="handlerConfirm(item)"
+        @on-logistics-order="handlerLogistics(item)"
       />
     </div>
 
@@ -27,6 +28,7 @@
     />
 
     <OrderCancle :cancelReason="cancelReason" ref="orderCancelCom"></OrderCancle>
+    <OrderLogistics ref="orderLogistics"></OrderLogistics>
   </div>
 </template>
 
@@ -39,6 +41,7 @@ import { ConfirmOrder, deleteOrder, findOrderList } from '@/api/order'
 import OrderCancle from './components/order-cancle.vue'
 import confirm from '@/components/library/confirm'
 import Message from '@/components/library/Message'
+import OrderLogistics from './components/order-logistics.vue'
 export default {
   name: ' MemberOrder',
   setup () {
@@ -105,11 +108,13 @@ export default {
       ...useCancel(),
       getOrderList,
       handlerDelete,
-      ...useConfirm()
+      ...useConfirm(),
+      ...useLogistics()
     }
   },
-  components: { XtxPagination, OrderItem, OrderCancle }
+  components: { XtxPagination, OrderItem, OrderCancle, OrderLogistics }
 }
+// 取消订单
 const useCancel = () => {
   // 组件实例
   const orderCancelCom = ref(null)
@@ -121,6 +126,7 @@ const useCancel = () => {
     handlerCancel
   }
 }
+// 确认到货
 const useConfirm = () => {
   //  确认收货
   const handlerConfirm = (item) => {
@@ -135,6 +141,17 @@ const useConfirm = () => {
   }
   return {
     handlerConfirm
+  }
+}
+// 查看物流
+const useLogistics = () => {
+  const orderLogistics = ref(null)
+  const handlerLogistics = (order) => {
+    orderLogistics.value.open(order)
+  }
+  return {
+    orderLogistics,
+    handlerLogistics
   }
 }
 </script>
